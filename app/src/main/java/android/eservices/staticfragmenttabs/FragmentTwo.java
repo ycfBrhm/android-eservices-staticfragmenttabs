@@ -8,29 +8,26 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-//TODO : fix this fragment so it works :)
-//Once it's done, then create a second fragment with the other layout
-public class FragmentOne extends Fragment implements View.OnClickListener {
+public class FragmentTwo extends Fragment implements View.OnClickListener {
+    public static final String TAB_NAME = "SUB TO COUNTER";
+    private FragmentOne.OnButtonClickedListener mCallback;
 
-    public static final String TAB_NAME = "ADD TO COUNTER";
-    private OnButtonClickedListener mCallback;
-
-    public FragmentOne() {
+    public FragmentTwo() {
         //TODO
         // constructeur vide
     }
 
-    public static FragmentOne newInstance() {
+    public static FragmentTwo newInstance() {
         //TODO
-        return new FragmentOne();
+        return new FragmentTwo();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO
-        ViewGroup fragmentOneView = (ViewGroup) inflater.inflate(R.layout.fragment_one, container, false);
+        ViewGroup fragmentOneView = (ViewGroup) inflater.inflate(R.layout.fragment_two, container, false);
 
-        fragmentOneView.findViewById(R.id.button_increment).setOnClickListener(this);
+        fragmentOneView.findViewById(R.id.button_decrement).setOnClickListener(this);
         return fragmentOneView;
     }
 
@@ -42,19 +39,14 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 
     @Override
     public void onStart() {
-
         super.onStart();
-    }
-
-    public interface OnButtonClickedListener {
-        public void onCounterUpdated(boolean isIncremented);
     }
 
 
     private void createCallbackToParentActivity(Context context){
         try {
 
-            mCallback = (OnButtonClickedListener) context;
+            mCallback = (FragmentOne.OnButtonClickedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListener");
         }
@@ -68,9 +60,6 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        mCallback.onCounterUpdated(true);
+        mCallback.onCounterUpdated(false);
     }
-
-    //TODO add listener to button and transmit the information to parent Activity
-    //TODO read the Android doc, as suggested, to do it the right way
 }
